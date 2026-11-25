@@ -1,0 +1,711 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI가 동료가 되는 시대 복습 · 경남교육청 교육연수원 행복특강</title>
+<meta name="description" content="2026.11.26 경상남도교육청 교육연수원 행복특강 「AI가 동료가 되는 시대」 강의 후 따라 하기 페이지">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{
+  --ink-1:#151515; --ink-2:#3F3F46; --ink-3:#71717A;
+  --bg:#F5F5F3; --surface:#FFFFFF; --line:#E7E5E4; --soft:#F5F5F3;
+  --accent:#C2362C;
+  --ok:#12A150;
+  --scale:1;
+  --r:14px;
+}
+*{box-sizing:border-box}
+html{font-size:calc(16px * var(--scale)); -webkit-text-size-adjust:100%}
+body{margin:0; background:var(--bg); color:var(--ink-2);
+  font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif;
+  line-height:1.65; word-break:keep-all; overflow-wrap:anywhere}
+a{color:var(--accent)}
+img{max-width:100%; height:auto; display:block}
+.wrap{max-width:720px; margin:0 auto; padding:0 16px 120px}
+
+/* 머리 */
+.top{padding:28px 0 8px}
+.eyebrow{font-size:.8125rem; color:var(--ink-3); letter-spacing:.01em}
+h1{font-size:1.25rem; line-height:1.35; color:var(--ink-1); margin:6px 0 6px; font-weight:800}
+.lead{margin:0; font-size:1rem}
+
+/* 히어로 */
+.hero{background:var(--surface); border-radius:var(--r); padding:24px 20px; margin:24px 0 0; box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.hero .tag{display:inline-block; font-size:.8125rem; font-weight:700; color:var(--accent); background:var(--bg); border-radius:999px; padding:3px 12px}
+.hero h2{font-size:2rem; line-height:1.35; color:var(--ink-1); margin:12px 0 6px; font-weight:800}
+.hero p{margin:0 0 16px}
+
+/* 칩 */
+.chips{display:flex; flex-wrap:wrap; gap:8px; margin:0 0 10px}
+.chip{font:inherit; font-size:1rem; font-weight:600; color:var(--ink-2); background:var(--soft); border:1px solid var(--line);
+  border-radius:999px; padding:8px 14px; min-height:40px; cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink-1); color:var(--surface); border-color:var(--ink-1)}
+.chips-label{font-size:.8125rem; color:var(--ink-3); margin:0 0 6px}
+
+/* 프롬프트 상자 */
+.prompt{position:relative; margin:0 0 6px}
+.prompt textarea{width:100%; font:inherit; font-size:1.0625rem; line-height:1.6; color:var(--ink-1);
+  background:var(--soft); border:1px solid var(--line); border-radius:12px; padding:14px 14px 56px; resize:vertical; min-height:120px}
+.prompt textarea:focus{outline:2px solid var(--accent); outline-offset:1px}
+.copy{position:absolute; right:10px; bottom:10px; font:inherit; font-size:1rem; font-weight:700; color:var(--surface); background:var(--accent);
+  border:0; border-radius:10px; padding:9px 16px; min-height:40px; cursor:pointer}
+.hint{font-size:.8125rem; color:var(--ink-3); margin:0}
+.path{margin:0 0 4px; color:var(--ink-1)}
+.block figure{margin:12px 0 0}
+.dots i{width:22px}
+
+/* 진행 */
+.progress{display:flex; align-items:center; gap:12px; margin:28px 0 8px}
+.progress strong{font-size:1.0625rem; color:var(--ink-1)}
+.dots{display:flex; gap:6px}
+.dots i{width:28px; height:8px; border-radius:4px; background:var(--line); display:block}
+.dots i.on{background:var(--ok)}
+
+/* 단계 카드 */
+.step{background:var(--surface); border-radius:var(--r); padding:24px 20px; margin:16px 0 0; box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.step-head{display:flex; gap:12px; align-items:flex-start}
+.num{flex:0 0 auto; width:36px; height:36px; border-radius:50%; background:var(--ink-1); color:var(--surface); font-weight:800; display:flex; align-items:center; justify-content:center}
+.step h3{font-size:1.25rem; line-height:1.35; color:var(--ink-1); margin:2px 0 4px; font-weight:800}
+.where{font-size:.875rem; margin:0}
+.where a{font-weight:700}
+.block{margin-top:20px}
+.block h4{font-size:1rem; color:var(--ink-1); margin:0 0 8px; font-weight:700}
+.tips{margin:0; padding-left:1.1em}
+.tips li{margin:4px 0}
+.done{font:inherit; font-size:1rem; font-weight:700; margin-top:20px; width:100%; min-height:48px; border-radius:12px; cursor:pointer;
+  background:var(--surface); color:var(--ink-1); border:1.5px solid var(--ink-1)}
+.done[aria-pressed="true"]{background:var(--ok); border-color:var(--ok); color:var(--surface)}
+
+/* 실제 화면 */
+details.real{margin-top:20px; border-radius:12px; background:var(--soft)}
+details.real summary{cursor:pointer; list-style:none; padding:14px 16px; font-weight:700; color:var(--ink-1); display:flex; justify-content:space-between; align-items:center}
+details.real summary::-webkit-details-marker{display:none}
+details.real summary::after{content:"펼치기 ▾"; font-size:.8125rem; color:var(--ink-3); font-weight:600}
+details.real[open] summary::after{content:"접기 ▴"}
+.real-body{padding:0 16px 16px}
+figure{margin:0 0 20px}
+figure img{border-radius:10px; border:1px solid var(--line); background:var(--surface)}
+figcaption{font-size:.875rem; color:var(--ink-2); margin-top:6px}
+figcaption b{color:var(--ink-1)}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+.grid2 figure{margin:0}
+.quote{background:var(--surface); border-left:3px solid var(--ink-1); border-radius:0 10px 10px 0; padding:12px 14px; margin:0 0 20px; font-size:1rem; color:var(--ink-1)}
+.quote small{display:block; color:var(--ink-3); font-size:.8125rem; margin-bottom:4px}
+
+/* 섹션 */
+.sec{margin-top:48px}
+.sec > h2{font-size:1.25rem; color:var(--ink-1); margin:0 0 4px; font-weight:800}
+.sec > p.sub{margin:0 0 16px; color:var(--ink-3); font-size:.875rem}
+.rows{display:grid; gap:12px}
+.row{background:var(--surface); border-radius:12px; padding:16px; box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.row .who{font-weight:800; color:var(--ink-1); font-size:1.0625rem}
+.row dl{margin:8px 0 0; display:grid; grid-template-columns:auto 1fr; gap:4px 12px; font-size:1rem}
+.row dt{color:var(--ink-3)}
+.row dd{margin:0}
+.line-copy{display:flex; gap:8px; align-items:center; justify-content:space-between; margin-top:10px; background:var(--soft); border-radius:10px; padding:8px 8px 8px 12px}
+.line-copy span{color:var(--ink-1); font-weight:600}
+.line-copy button{font:inherit; font-size:.875rem; font-weight:700; border:0; background:var(--ink-1); color:var(--surface); border-radius:8px; padding:8px 12px; min-height:38px; cursor:pointer; flex:0 0 auto}
+.safety{counter-reset:s; display:grid; gap:12px}
+.safety .row{padding-left:56px; position:relative}
+.safety .row::before{counter-increment:s; content:"0" counter(s); position:absolute; left:16px; top:15px; font-weight:800; color:var(--accent)}
+.safety .row b{color:var(--ink-1); font-size:1.0625rem}
+.safety .row p{margin:4px 0 0}
+.note{margin:12px 0 0; color:var(--ink-1); font-weight:600}
+details.more{background:var(--surface); border-radius:12px; margin-top:12px; box-shadow:0 1px 2px rgba(0,0,0,.04)}
+details.more summary{cursor:pointer; padding:16px; font-weight:800; color:var(--ink-1); font-size:1.0625rem; list-style:none}
+details.more summary::-webkit-details-marker{display:none}
+details.more summary::after{content:" ▾"; color:var(--ink-3)}
+details.more[open] summary::after{content:" ▴"}
+.more-body{padding:0 16px 16px}
+.more-body ol{padding-left:1.2em; margin:8px 0}
+.src-list{font-size:.875rem; padding-left:1.1em; margin:6px 0 0}
+.btn-link{display:inline-block; margin-top:8px; font-weight:700; text-decoration:none; background:var(--bg); color:var(--accent); border-radius:10px; padding:10px 14px}
+
+/* 책 · 홈페이지 */
+.adbar{background:var(--ink-1)}
+.adbar div{max-width:720px; margin:0 auto; padding:8px 16px; display:flex; gap:8px; justify-content:flex-end; flex-wrap:wrap}
+.adbar a{font-size:.8125rem; font-weight:700; text-decoration:none; border-radius:999px; padding:7px 14px; white-space:nowrap; color:var(--surface); box-shadow:inset 0 0 0 1px rgba(255,255,255,.35)}
+.adbar a.bk{background:var(--surface); color:var(--accent); box-shadow:none}
+.follow{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.follow .fc{background:var(--surface); border-radius:var(--r); padding:18px; box-shadow:0 1px 2px rgba(0,0,0,.04); display:flex; flex-direction:column}
+.follow .k{font-size:.8125rem; font-weight:700; color:var(--accent)}
+.follow h3{font-size:1.125rem; line-height:1.35; color:var(--ink-1); font-weight:800; margin:4px 0 6px}
+.follow p{margin:0 0 14px; flex:1}
+.follow a.go{display:flex; align-items:center; justify-content:center; font-weight:700; text-decoration:none; border-radius:10px; padding:11px 16px; min-height:44px; color:#fff}
+.follow a.yt{background:#E02F2F}
+.follow a.ka{background:#FEE500; color:#191919}
+@media (max-width:560px){.follow{grid-template-columns:1fr}}
+.bookad{display:flex; gap:20px; align-items:center; background:var(--surface); border-radius:var(--r); padding:20px; margin-top:40px; box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.bookad img{width:128px; flex:0 0 128px}
+.bookad .k{font-size:.8125rem; font-weight:700; color:var(--accent)}
+.bookad h3{font-size:1.25rem; line-height:1.35; color:var(--ink-1); font-weight:800; margin:4px 0 6px}
+.bookad p{margin:0 0 12px}
+.bookad .bt{display:flex; gap:8px; flex-wrap:wrap}
+.bookad .bt a{font-weight:700; text-decoration:none; border-radius:10px; padding:11px 16px; min-height:44px}
+.bookad .bt a.buy{background:var(--accent); color:#fff}
+.bookad .bt a.home{background:var(--bg); color:var(--ink-1)}
+@media (max-width:479px){
+  .bookad{flex-direction:column; text-align:center}
+  .bookad img{width:150px; flex-basis:auto}
+  .bookad .bt{justify-content:center}
+}
+
+footer{margin-top:56px; font-size:.875rem; color:var(--ink-3)}
+footer p{margin:4px 0}
+
+/* 글자 크기 · 알림 */
+.font-ctrl{position:fixed; right:12px; bottom:12px; display:flex; gap:6px; z-index:10}
+.font-ctrl button{font:inherit; font-weight:800; width:48px; height:48px; border-radius:12px; border:0; background:var(--ink-1); color:var(--surface); box-shadow:0 1px 4px rgba(0,0,0,.08); cursor:pointer}
+.toast{position:fixed; left:50%; bottom:76px; transform:translateX(-50%) translateY(20px); opacity:0; background:var(--ink-1); color:var(--surface);
+  padding:10px 18px; border-radius:999px; font-weight:700; font-size:.875rem; transition:.2s; pointer-events:none; z-index:11}
+.toast.show{opacity:1; transform:translateX(-50%) translateY(0)}
+
+@media (min-width:640px){
+  .hero,.step{padding:28px}
+}
+</style>
+</head>
+<body>
+<div class="adbar"><div>
+  <a class="bk" href="https://product.kyobobook.co.kr/detail/S000221773230" target="_blank" rel="noopener">『AI 2027』 책 보기 ↗</a>
+  <a href="https://www.youtube.com/@newsduk?sub_confirmation=1" target="_blank" rel="noopener">뉴스덕 구독 ↗</a>
+  <a href="https://open.kakao.com/o/gQiVg8Bh" target="_blank" rel="noopener">오픈채팅방 ↗</a>
+  <a href="https://www.itcl.kr" target="_blank" rel="noopener">ITCL 홈페이지 ↗</a>
+</div></div>
+<div class="wrap">
+
+<header class="top">
+  <div class="eyebrow">경상남도교육청 교육연수원 행복특강 · 2026.11.26 · 김덕진</div>
+  <h1>AI가 동료가<br>되는 시대</h1>
+  <p class="lead">강의 화면에서 본 것을 그대로 따라 하는 페이지입니다. 문장을 고르고, 복사해서, AI에 붙여 넣으세요. 챗GPT 무료 계정이면 충분합니다.</p>
+</header>
+
+<section class="hero" aria-labelledby="hero-t">
+  <span class="tag">오늘 딱 하나</span>
+  <h2 id="hero-t">내일의 한 줄, AI에게 맡겨 보세요</h2>
+  <p>내 자리를 고르면 문장이 채워집니다. 복사해서 챗GPT에 붙여 넣으세요.</p>
+  <p class="chips-label">나는</p>
+  <div class="chips" data-target="p-hero">
+    <button class="chip" data-fill="나는 학교 행정실에서 일합니다. 딱딱한 안내문을 학부모가 읽기 쉽게 고쳐 쓰려고 해요.">행정실</button>
+    <button class="chip" data-fill="나는 학교 급식실에서 일합니다. 자주 받는 전화 질문에 답할 문장을 만들어 두려고 해요.">급식실</button>
+    <button class="chip" data-fill="나는 돌봄교실에서 일합니다. 겨울방학 운영 안내문 초안을 쓰려고 해요.">돌봄교실</button>
+    <button class="chip" data-fill="나는 학교 시설을 맡고 있습니다. 졸업식 준비 체크리스트를 만들려고 해요.">시설 · 안전</button>
+    <button class="chip" data-fill="나는 학교 교무실에서 일합니다. 행사 계획서의 뼈대를 잡으려고 해요.">교무실</button>
+    <button class="chip" data-fill="나는 이번 주말 가족 나들이를 준비합니다. 조건에 맞는 시간표를 받으려고 해요.">집에서</button>
+  </div>
+  <div class="prompt">
+    <textarea id="p-hero" rows="5" aria-label="맡길 일 한 줄" data-tail="바로 하지 말고 꼭 필요한 질문을 먼저 3개만 해 주세요. 모르는 것은 '확인 필요'라고 적어 주세요.">나는 [어디]에서 일합니다. [내일 할 일]을 하려고 해요.
+바로 하지 말고 꼭 필요한 질문을 먼저 3개만 해 주세요. 모르는 것은 '확인 필요'라고 적어 주세요.</textarea>
+    <button class="copy" data-copy="p-hero">복사</button>
+  </div>
+  <p class="hint">[ ] 자리는 직접 고쳐 써도 됩니다. 실제 이름, 연락처, 학생 정보는 넣지 않습니다.</p>
+</section>
+
+<div class="progress" aria-live="polite">
+  <strong>따라 하기 <span id="cnt">0</span> / 13</strong>
+  <div class="dots" aria-hidden="true"><i data-dot="s1"></i><i data-dot="s2"></i><i data-dot="s3"></i><i data-dot="s4"></i><i data-dot="s5"></i><i data-dot="s6"></i><i data-dot="s7"></i><i data-dot="s8"></i><i data-dot="s9"></i><i data-dot="s10"></i><i data-dot="s11"></i><i data-dot="s12"></i><i data-dot="s13"></i></div>
+</div>
+
+<h2 style="margin:34px 4px 4px;font-size:1.3rem;font-weight:800;letter-spacing:-.01em">일터에서</h2>
+<p style="margin:0 4px 14px;color:var(--ink-3);font-size:.95rem">요청하고, 결과를 확인하고, 고치게 합니다. 강의에서 본 화면 그대로입니다.</p>
+<section class="step" id="s1">
+  <div class="step-head"><div class="num">1</div><div><h3>공지문을 쉬운 말로</h3><p class="where">어디서: <a href="https://chatgpt.com" target="_blank" rel="noopener">챗GPT</a> · 무료</p></div></div>
+
+  <div class="block"><h4>① 요청: 네 줄을 붙입니다</h4>
+    <div class="chips" data-target="p-a1" data-mode="all"><button class="chip" data-fill="아래 공사 안내문을 초등학생 학부모가 휴대폰으로 읽기 쉽게 다시 써 줘.&#10;- 목표: 공사 기간에 무엇이 달라지는지 한 번에 알게 하기&#10;- 조건: 날짜·장소·전화번호는 원문 그대로. 문장은 짧게, 한자어는 쉬운 말로&#10;- 형식: 제목 한 줄, 꼭 알아야 할 것 세 가지, 문의처&#10;- 기준: 원문에 없는 내용은 지어내지 말고 &#x27;확인 필요&#x27;라고 적기&#10;&#10;[안내문]&#10;2026학년도 동계방학 중 본교 교사동 화장실 환경개선공사 시행에 따른 협조 사항을 아래와 같이 안내하오니, 학부모님께서는 숙지하시어 학생 안전사고 예방에 만전을 기하여 주시기 바랍니다.&#10;1. 공사 기간: 2026. 12. 28.(월) ~ 2027. 1. 29.(금)&#10;2. 공사 구간: 본관 1~3층 화장실 전체&#10;3. 협조 사항&#10; 가. 공사 기간 중 본관 출입을 금하며, 돌봄교실 및 방과후학교는 별관 1층에서 운영함.&#10; 나. 공사 차량 진출입으로 인하여 정문 이용을 제한하오니 후문을 이용하여 주시기 바람.&#10; 다. 소음 및 분진 발생이 예상되오니 양지하여 주시기 바람.&#10;4. 문의: ○○초등학교 행정실 (055-000-0000)">예시 안내문으로</button><button class="chip" data-fill="아래 안내문을 [읽는 사람]이 휴대폰으로 읽기 쉽게 다시 써 줘.&#10;- 목표: [무엇을 알게 할지]&#10;- 조건: 날짜·장소·전화번호는 원문 그대로. 문장은 짧게, 한자어는 쉬운 말로&#10;- 형식: 제목 한 줄, 꼭 알아야 할 것 세 가지, 문의처&#10;- 기준: 원문에 없는 내용은 지어내지 말고 &#x27;확인 필요&#x27;라고 적기&#10;&#10;[안내문]&#10;(여기에 고칠 글을 붙여 넣으세요. 실제 이름과 연락처는 지우고 넣습니다)">내 안내문으로</button></div>
+    <div class="prompt"><textarea id="p-a1" rows="14" aria-label="공지문 고쳐 쓰기 요청">아래 공사 안내문을 초등학생 학부모가 휴대폰으로 읽기 쉽게 다시 써 줘.
+- 목표: 공사 기간에 무엇이 달라지는지 한 번에 알게 하기
+- 조건: 날짜·장소·전화번호는 원문 그대로. 문장은 짧게, 한자어는 쉬운 말로
+- 형식: 제목 한 줄, 꼭 알아야 할 것 세 가지, 문의처
+- 기준: 원문에 없는 내용은 지어내지 말고 '확인 필요'라고 적기
+
+[안내문]
+2026학년도 동계방학 중 본교 교사동 화장실 환경개선공사 시행에 따른 협조 사항을 아래와 같이 안내하오니, 학부모님께서는 숙지하시어 학생 안전사고 예방에 만전을 기하여 주시기 바랍니다.
+1. 공사 기간: 2026. 12. 28.(월) ~ 2027. 1. 29.(금)
+2. 공사 구간: 본관 1~3층 화장실 전체
+3. 협조 사항
+ 가. 공사 기간 중 본관 출입을 금하며, 돌봄교실 및 방과후학교는 별관 1층에서 운영함.
+ 나. 공사 차량 진출입으로 인하여 정문 이용을 제한하오니 후문을 이용하여 주시기 바람.
+ 다. 소음 및 분진 발생이 예상되오니 양지하여 주시기 바람.
+4. 문의: ○○초등학교 행정실 (055-000-0000)</textarea><button class="copy" data-copy="p-a1">복사</button></div>
+    <p class="hint">목표 · 조건 · 형식 · 기준 네 줄이 결과의 절반을 정합니다.</p>
+  </div>
+  <div class="block"><h4>② 결과 확인: 원문과 대조시킵니다</h4>
+    <div class="line-copy"><span>네가 쓴 글을 원문과 대조해 줘. 날짜·장소·전화번호가 원문과 같은지, 네가 덧붙이거나 뺀 내용이 있는지 표로 보여 줘.</span><button data-copytext="네가 쓴 글을 원문과 대조해 줘. 날짜·장소·전화번호가 원문과 같은지, 네가 덧붙이거나 뺀 내용이 있는지 표로 보여 줘.">복사</button></div><ul class="tips" style="margin-top:12px"><li>AI가 만든 대조표도 틀릴 수 있습니다. <b>날짜와 전화번호는 내 눈으로 한 번 더</b> 봅니다.</li></ul>
+  </div>
+  <div class="block"><h4>③ 수정: 고칠 곳만 콕 집습니다</h4>
+    <div class="line-copy"><span>좋아. 두 가지만 고쳐 줘. 첫째, 이모지는 빼 줘. 둘째, 맨 아래에 학부모 단체 문자로 보낼 세 줄 요약을 덧붙여 줘.</span><button data-copytext="좋아. 두 가지만 고쳐 줘. 첫째, 이모지는 빼 줘. 둘째, 맨 아래에 학부모 단체 문자로 보낼 세 줄 요약을 덧붙여 줘.">복사</button></div><div class="line-copy"><span>제목을 더 짧게, 한 줄로</span><button data-copytext="제목을 더 짧게, 한 줄로">복사</button></div><div class="line-copy"><span>어려운 낱말이 남았으면 쉬운 말로 바꿔 줘</span><button data-copytext="어려운 낱말이 남았으면 쉬운 말로 바꿔 줘">복사</button></div><ul class="tips" style="margin-top:12px"><li>'더 잘 써 줘'보다 <b>'이것과 이것을 고쳐 줘'</b>가 잘 통합니다.</li><li>보내기 버튼은 사람이 누릅니다.</li></ul>
+  </div>
+  <details class="real"><summary>강사가 실제로 한 화면 보기</summary><div class="real-body">
+    <p class="hint" style="margin-bottom:12px">그림을 누르면 크게 볼 수 있어요.</p>
+    <figure><img src="img/notice_1_draft.jpg" alt="챗GPT가 쉬운 말로 다시 쓴 공사 안내문 초안" loading="lazy" width="1039" height="660"><figcaption><b>① 9초 뒤에 나온 초안.</b> 날짜 · 장소 · 전화번호는 그대로이고 문장이 짧아졌습니다.</figcaption></figure>
+    <figure><img src="img/notice_2_check.jpg" alt="원문과 대조한 표: 삭제 칸에 학생 안전사고 예방 당부가 빠졌다고 적혀 있음" loading="lazy" width="1039" height="700"><figcaption><b>② 대조를 시켰더니.</b> 원문의 '학생 안전사고 예방' 당부가 빠진 것을 AI가 스스로 찾았습니다.</figcaption></figure>
+    <figure><img src="img/notice_3_fix.jpg" alt="고친 안내문 아래에 붙은 학부모 단체 문자용 세 줄 요약" loading="lazy" width="1039" height="700"><figcaption><b>③ 고친 뒤.</b> 단체 문자로 보낼 세 줄 요약이 붙었습니다.</figcaption></figure>
+    <p class="hint">챗GPT 무료 계정 · 임시 채팅 · 2026년 11월 25일 강사 실행 · 학교와 연락처는 가상</p>
+  </div></details>
+
+  <button class="done" data-step="s1" aria-pressed="false">해 봤어요</button>
+</section>
+<section class="step" id="s2">
+  <div class="step-head"><div class="num">2</div><div><h3>빈 종이 대신 안내문 초안</h3><p class="where">어디서: <a href="https://chatgpt.com" target="_blank" rel="noopener">챗GPT</a> · 무료</p></div></div>
+
+  <div class="block"><h4>따라 할 문장</h4>
+    <div class="chips" data-target="p-b1" data-mode="all"><button class="chip" data-fill="초등학교 돌봄교실 겨울방학 운영 안내문 초안을 써 줘.&#10;- 읽는 사람: 돌봄교실 학부모&#10;- 꼭 들어갈 내용: 운영 기간 2027. 1. 4.(월)~1. 29.(금), 운영 시간 09:00~17:00, 장소 별관 1층 돌봄교실, 점심은 도시락 지참, 신청 마감 2026. 12. 18.(금)&#10;- 형식: 제목, 인사 두 문장, 표 한 개, 문의처&#10;- 모르는 내용은 지어내지 말고 [ ] 빈칸으로 남겨 줘">돌봄교실 방학 안내</button><button class="chip" data-fill="초등학교 방과후학교 수강 신청 안내문 초안을 써 줘.&#10;- 읽는 사람: 학부모&#10;- 꼭 들어갈 내용: [신청 기간], [신청 방법], [개설 강좌]&#10;- 형식: 제목, 인사 두 문장, 표 한 개, 문의처&#10;- 모르는 내용은 지어내지 말고 [ ] 빈칸으로 남겨 줘">방과후 신청 안내</button><button class="chip" data-fill="학교 급식 식단 변경 안내문 초안을 써 줘.&#10;- 읽는 사람: 학부모와 학생&#10;- 꼭 들어갈 내용: [바뀌는 날짜], [바뀌는 메뉴], [바뀌는 이유]&#10;- 형식: 제목, 안내 두 문장, 문의처&#10;- 모르는 내용은 지어내지 말고 [ ] 빈칸으로 남겨 줘">식단 변경 안내</button></div>
+    <div class="prompt"><textarea id="p-b1" rows="8" aria-label="안내문 초안 요청">초등학교 돌봄교실 겨울방학 운영 안내문 초안을 써 줘.
+- 읽는 사람: 돌봄교실 학부모
+- 꼭 들어갈 내용: 운영 기간 2027. 1. 4.(월)~1. 29.(금), 운영 시간 09:00~17:00, 장소 별관 1층 돌봄교실, 점심은 도시락 지참, 신청 마감 2026. 12. 18.(금)
+- 형식: 제목, 인사 두 문장, 표 한 개, 문의처
+- 모르는 내용은 지어내지 말고 [ ] 빈칸으로 남겨 줘</textarea><button class="copy" data-copy="p-b1">복사</button></div>
+    <p class="hint">[ ] 자리는 내 학교 내용으로 고쳐 쓰세요. 모르는 것은 빈칸으로 남기게 합니다.</p>
+  </div>
+  <div class="block"><h4>받은 초안에서 꼭 볼 두 곳</h4>
+    <ul class="tips"><li><b>틀린 곳.</b> 강의 화면의 초안은 제목에 '2027학년도'라고 썼습니다. 2027년 1월의 겨울방학은 2026학년도입니다. 연도 · 요일 · 금액은 내 눈으로 확인합니다.</li><li><b>빈칸.</b> [ ]로 남은 곳은 담당자가 채웁니다. 빈칸을 그럴듯하게 메워 달라고 하지 않습니다.</li></ul>
+  </div>
+  <details class="real"><summary>강사가 실제로 한 화면 보기</summary><div class="real-body">
+    <p class="hint" style="margin-bottom:12px">그림을 누르면 크게 볼 수 있어요.</p>
+    <figure><img src="img/care_title.jpg" alt="돌봄교실 안내문 초안의 제목: 2027학년도 겨울방학 돌봄교실 운영 안내" loading="lazy" width="1039" height="300"><figcaption><b>틀린 곳 찾기.</b> 제목의 '2027학년도'는 AI가 넘겨짚은 것입니다. 학교 일을 아는 사람만 잡아냅니다.</figcaption></figure>
+    <p class="hint">챗GPT 무료 계정 · 임시 채팅 · 2026년 11월 25일 강사 실행 · 학교와 연락처는 가상</p>
+  </div></details>
+
+  <button class="done" data-step="s2" aria-pressed="false">해 봤어요</button>
+</section>
+<section class="step" id="s3">
+  <div class="step-head"><div class="num">3</div><div><h3>행사 준비 체크리스트</h3><p class="where">어디서: <a href="https://chatgpt.com" target="_blank" rel="noopener">챗GPT</a> · 무료</p></div></div>
+
+  <div class="block"><h4>따라 할 문장</h4>
+    <div class="chips" data-target="p-c1" data-mode="all"><button class="chip" data-fill="나는 초등학교 시설 담당 주무관이야. 2027. 1. 8.(금) 강당에서 졸업식이 열려. 참석 인원은 300명쯤이야.&#10;행사 일주일 전부터 당일까지 내가 챙길 일을 체크리스트로 만들어 줘.&#10;- 형식: 표 (언제 / 할 일 / 확인)&#10;- 한 칸에 한 가지씩, 열 줄 안팎으로&#10;- 우리 학교 사정을 모르는 부분은 맨 아래에 &#x27;내가 확인할 것&#x27;으로 따로 적어 줘">졸업식</button><button class="chip" data-fill="나는 초등학교 교무실에서 일해. [날짜]에 운동장에서 체육대회가 열려. 참가 인원은 [몇 명]쯤이야.&#10;행사 2주 전부터 당일까지 내가 챙길 일을 체크리스트로 만들어 줘.&#10;- 형식: 표 (언제 / 할 일 / 확인)&#10;- 한 칸에 한 가지씩, 열 줄 안팎으로&#10;- 우리 학교 사정을 모르는 부분은 맨 아래에 &#x27;내가 확인할 것&#x27;으로 따로 적어 줘">체육대회</button><button class="chip" data-fill="나는 학교 시설 담당 주무관이야. 겨울방학 전에 학교 시설을 점검하려고 해.&#10;동파와 화재를 막으려면 무엇을 점검해야 하는지 체크리스트로 만들어 줘.&#10;- 형식: 표 (점검할 곳 / 할 일 / 확인)&#10;- 한 칸에 한 가지씩, 열 줄 안팎으로&#10;- 우리 학교 사정을 모르는 부분은 맨 아래에 &#x27;내가 확인할 것&#x27;으로 따로 적어 줘">겨울철 시설 점검</button></div>
+    <div class="prompt"><textarea id="p-c1" rows="8" aria-label="체크리스트 요청">나는 초등학교 시설 담당 주무관이야. 2027. 1. 8.(금) 강당에서 졸업식이 열려. 참석 인원은 300명쯤이야.
+행사 일주일 전부터 당일까지 내가 챙길 일을 체크리스트로 만들어 줘.
+- 형식: 표 (언제 / 할 일 / 확인)
+- 한 칸에 한 가지씩, 열 줄 안팎으로
+- 우리 학교 사정을 모르는 부분은 맨 아래에 '내가 확인할 것'으로 따로 적어 줘</textarea><button class="copy" data-copy="p-c1">복사</button></div>
+  </div>
+  <div class="block"><h4>이렇게 하면 됩니다</h4>
+    <ul class="tips"><li>첫 줄에 <b>내가 누구인지</b>를 먼저 씁니다. 그래야 내 자리의 일만 골라 옵니다.</li><li>맨 아래 '내가 확인할 것'을 따로 받으면 AI가 모르는 우리 학교 사정이 보입니다.</li><li>체크리스트는 출발점입니다. 학교 안전 매뉴얼과 교육청 지침이 먼저입니다.</li></ul>
+  </div>
+  <details class="real"><summary>강사가 실제로 한 화면 보기</summary><div class="real-body">
+    <p class="hint" style="margin-bottom:12px">그림을 누르면 크게 볼 수 있어요.</p>
+    <figure><img src="img/event_table.jpg" alt="챗GPT가 만든 졸업식 시설관리 체크리스트 표" loading="lazy" width="1039" height="492"><figcaption><b>졸업식 일주일 전부터.</b> 난방 · 비상구 · 소방시설처럼 시설 담당의 일을 날짜별로 나눠 줬습니다.</figcaption></figure>
+    <p class="hint">챗GPT 무료 계정 · 임시 채팅 · 2026년 11월 25일 강사 실행 · 학교와 연락처는 가상</p>
+  </div></details>
+
+  <button class="done" data-step="s3" aria-pressed="false">해 봤어요</button>
+</section>
+<section class="step" id="s4">
+  <div class="step-head"><div class="num">4</div><div><h3>같은 전화에 같은 대답</h3><p class="where">어디서: <a href="https://chatgpt.com" target="_blank" rel="noopener">챗GPT</a> · 무료</p></div></div>
+
+  <div class="block"><h4>따라 할 문장</h4>
+    <div class="chips" data-target="p-d1" data-mode="all"><button class="chip" data-fill="학교 급식실로 자주 오는 전화 질문 다섯 가지와, 조리 실무사가 그대로 읽어도 되는 답변 문장을 만들어 줘.&#10;- 답은 두 문장 이내, 존댓말로&#10;- 학교마다 다른 내용은 [확인 후 안내]라고 적기&#10;- 형식: 표 (질문 / 답변)">급식실</button><button class="chip" data-fill="학교 행정실로 자주 오는 전화 질문 다섯 가지와, 그대로 읽어도 되는 답변 문장을 만들어 줘.&#10;- 답은 두 문장 이내, 존댓말로&#10;- 학교마다 다른 내용은 [확인 후 안내]라고 적기&#10;- 형식: 표 (질문 / 답변)">행정실</button><button class="chip" data-fill="돌봄교실로 자주 오는 학부모 문의 다섯 가지와, 그대로 읽어도 되는 답변 문장을 만들어 줘.&#10;- 답은 두 문장 이내, 존댓말로&#10;- 학교마다 다른 내용은 [확인 후 안내]라고 적기&#10;- 형식: 표 (질문 / 답변)">돌봄교실</button></div>
+    <div class="prompt"><textarea id="p-d1" rows="6" aria-label="전화 답변 틀 요청">학교 급식실로 자주 오는 전화 질문 다섯 가지와, 조리 실무사가 그대로 읽어도 되는 답변 문장을 만들어 줘.
+- 답은 두 문장 이내, 존댓말로
+- 학교마다 다른 내용은 [확인 후 안내]라고 적기
+- 형식: 표 (질문 / 답변)</textarea><button class="copy" data-copy="p-d1">복사</button></div>
+  </div>
+  <div class="block"><h4>이렇게 하면 됩니다</h4>
+    <ul class="tips"><li><b>'학교마다 다른 내용은 확인 후 안내'</b> 줄을 빼면 AI가 그럴듯한 답을 지어냅니다.</li><li>알레르기처럼 건강과 이어진 안내는 반드시 영양(교)사 확인을 거칩니다.</li><li>받은 답변 틀은 초안입니다. 우리 학교 말투와 규정에 맞게 다듬어 씁니다.</li></ul>
+  </div>
+  <details class="real"><summary>강사가 실제로 한 화면 보기</summary><div class="real-body">
+    <p class="hint" style="margin-bottom:12px">그림을 누르면 크게 볼 수 있어요.</p>
+    <figure><img src="img/meal_faq.jpg" alt="급식실 전화 질문과 답변 표: 알레르기 문의는 영양교사에게 확인 후 안내" loading="lazy" width="1039" height="548"><figcaption><b>급식실 답변 틀.</b> 알레르기 · 환불은 지어내지 않고 '확인 후 안내'로 남겼습니다.</figcaption></figure>
+    <p class="hint">챗GPT 무료 계정 · 임시 채팅 · 2026년 11월 25일 강사 실행 · 학교와 연락처는 가상</p>
+  </div></details>
+
+  <button class="done" data-step="s4" aria-pressed="false">해 봤어요</button>
+</section>
+<h2 style="margin:34px 4px 4px;font-size:1.3rem;font-weight:800;letter-spacing:-.01em">생활에서</h2>
+<p style="margin:0 4px 14px;color:var(--ink-3);font-size:.95rem">목적과 조건을 어떻게 말하느냐에 따라 결과가 달라집니다.</p>
+<section class="step" id="s5">
+  <div class="step-head"><div class="num">5</div><div><h3>여행 계획: 조건을 붙여서</h3><p class="where">어디서: <a href="https://chatgpt.com" target="_blank" rel="noopener">챗GPT</a> · 무료</p></div></div>
+
+  <div class="block"><h4>따라 할 문장</h4>
+    <div class="chips" data-target="p-e1" data-mode="all"><button class="chip" data-fill="부산 1박 2일 여행 계획을 짜 줘.&#10;- 누구와: 70대 어머니와 둘이&#10;- 조건: 많이 걷지 않기, 계단 적은 곳, 창원에서 기차로 이동&#10;- 좋아하는 것: 바다 보이는 카페, 재래시장&#10;- 형식: 시간표로, 이동 방법과 걷는 시간도 같이&#10;- 영업시간·요금처럼 바뀌는 정보는 &#x27;확인 필요&#x27;라고 표시해 줘">어머니와 부산</button><button class="chip" data-fill="제주 2박 3일 여행 계획을 짜 줘.&#10;- 누구와: 초등학생 아이 둘과 넷이&#10;- 조건: 하루에 차 타는 시간은 1시간 안쪽, 비 올 때 갈 곳도 하나씩&#10;- 좋아하는 것: 동물, 바다 놀이&#10;- 형식: 시간표로, 이동 방법도 같이&#10;- 영업시간·요금처럼 바뀌는 정보는 &#x27;확인 필요&#x27;라고 표시해 줘">아이들과 제주</button><button class="chip" data-fill="경주 당일치기 여행 계획을 짜 줘.&#10;- 누구와: 혼자&#10;- 조건: 대중교통과 걷기로만, 많이 붐비는 곳은 피하기&#10;- 좋아하는 것: 조용한 절, 오래된 골목&#10;- 형식: 시간표로, 걷는 시간도 같이&#10;- 영업시간·요금처럼 바뀌는 정보는 &#x27;확인 필요&#x27;라고 표시해 줘">혼자 경주</button></div>
+    <div class="prompt"><textarea id="p-e1" rows="8" aria-label="여행 계획 요청">부산 1박 2일 여행 계획을 짜 줘.
+- 누구와: 70대 어머니와 둘이
+- 조건: 많이 걷지 않기, 계단 적은 곳, 창원에서 기차로 이동
+- 좋아하는 것: 바다 보이는 카페, 재래시장
+- 형식: 시간표로, 이동 방법과 걷는 시간도 같이
+- 영업시간·요금처럼 바뀌는 정보는 '확인 필요'라고 표시해 줘</textarea><button class="copy" data-copy="p-e1">복사</button></div>
+  </div>
+  <div class="block"><h4>한 줄만 보내면 생기는 일</h4>
+    <ul class="tips"><li>"부산 여행 계획 짜 줘" 한 줄만 보내면 AI가 일곱 가지를 되묻습니다. 그 일곱 가지가 먼저 말해 줄 조건입니다: <b>언제, 며칠, 누구와, 무엇을 타고, 무엇을 좋아하고, 얼마를 쓰고, 그 밖에 바라는 것.</b></li><li>기차 시간과 영업시간은 AI가 어림한 것입니다. 가기 전에 직접 확인합니다.</li></ul>
+  </div>
+  <details class="real"><summary>강사가 실제로 한 화면 보기</summary><div class="real-body">
+    <p class="hint" style="margin-bottom:12px">그림을 누르면 크게 볼 수 있어요.</p>
+    <figure><img src="img/trip_1_ask.jpg" alt="한 줄만 보냈을 때: 챗GPT가 언제 출발하는지부터 되묻는 화면" loading="lazy" width="1039" height="440"><figcaption><b>한 줄만 보냈더니.</b> 계획 대신 질문이 돌아옵니다.</figcaption></figure>
+    <figure><img src="img/trip_2_plan.jpg" alt="조건을 붙였을 때: 1일 차 시간표" loading="lazy" width="1039" height="440"><figcaption><b>조건을 붙였더니.</b> 바로 시간표가 나옵니다. 기차 소요시간은 '확인 필요'로 남았습니다.</figcaption></figure>
+    <p class="hint">챗GPT 무료 계정 · 임시 채팅 · 2026년 11월 25일 강사 실행 · 학교와 연락처는 가상</p>
+  </div></details>
+
+  <button class="done" data-step="s5" aria-pressed="false">해 봤어요</button>
+</section>
+<section class="step" id="s6">
+  <div class="step-head"><div class="num">6</div><div><h3>외국어 연습 상대</h3><p class="where">어디서: <a href="https://chatgpt.com" target="_blank" rel="noopener">챗GPT</a> · 무료 · 마이크를 켜면 말로도 됩니다</p></div></div>
+
+  <div class="block"><h4>따라 할 문장</h4>
+    <div class="chips" data-target="p-f1" data-mode="all"><button class="chip" data-fill="다음 달에 후쿠오카에 가. 식당에서 주문하는 일본어를 연습하고 싶어.&#10;- 네가 점원, 내가 손님&#10;- 한 번에 한 문장씩만 말하고, 일본어 아래에 한글 발음과 뜻을 적어 줘&#10;- 내가 틀리면 한국어로 짧게 고쳐 주고 이어서 진행해 줘&#10;- 나는 완전 초보야">일본 식당 주문</button><button class="chip" data-fill="다음 달에 해외여행을 가. 호텔에서 체크인하는 영어를 연습하고 싶어.&#10;- 네가 호텔 직원, 내가 손님&#10;- 한 번에 한 문장씩만 말하고, 영어 아래에 한글 발음과 뜻을 적어 줘&#10;- 내가 틀리면 한국어로 짧게 고쳐 주고 이어서 진행해 줘&#10;- 나는 완전 초보야">호텔 체크인</button><button class="chip" data-fill="여행 가서 길을 묻는 영어를 연습하고 싶어.&#10;- 네가 지나가는 사람, 내가 여행객&#10;- 한 번에 한 문장씩만 말하고, 영어 아래에 한글 발음과 뜻을 적어 줘&#10;- 내가 틀리면 한국어로 짧게 고쳐 주고 이어서 진행해 줘&#10;- 나는 완전 초보야">길 묻기</button></div>
+    <div class="prompt"><textarea id="p-f1" rows="7" aria-label="외국어 연습 요청">다음 달에 후쿠오카에 가. 식당에서 주문하는 일본어를 연습하고 싶어.
+- 네가 점원, 내가 손님
+- 한 번에 한 문장씩만 말하고, 일본어 아래에 한글 발음과 뜻을 적어 줘
+- 내가 틀리면 한국어로 짧게 고쳐 주고 이어서 진행해 줘
+- 나는 완전 초보야</textarea><button class="copy" data-copy="p-f1">복사</button></div>
+  </div>
+  <div class="block"><h4>이렇게 하면 됩니다</h4>
+    <ul class="tips"><li>한글로 소리 나는 대로 쳐도 알아듣습니다. 강의에서는 "후타리데스. 라멘 히토츠 쿠다사이"라고만 쳤습니다.</li><li><b>틀려도 됩니다.</b> 백 번 틀려도 눈치 주지 않는 연습 상대입니다.</li></ul><div style="margin-top:12px"><div class="line-copy"><span>조금 더 천천히, 쉬운 말로 해 줘</span><button data-copytext="조금 더 천천히, 쉬운 말로 해 줘">복사</button></div><div class="line-copy"><span>방금 배운 문장으로 한 번 더 연습하자</span><button data-copytext="방금 배운 문장으로 한 번 더 연습하자">복사</button></div></div>
+  </div>
+  <details class="real"><summary>강사가 실제로 한 화면 보기</summary><div class="real-body">
+    <p class="hint" style="margin-bottom:12px">그림을 누르면 크게 볼 수 있어요.</p>
+    <figure><img src="img/lang_talk.jpg" alt="한글로 친 일본어를 챗GPT가 알아듣고 풀어 주는 화면" loading="lazy" width="1039" height="510"><figcaption><b>한글로 쳤는데.</b> 알아듣고 뜻을 풀어 준 뒤 다음 질문으로 넘어갑니다.</figcaption></figure>
+    <p class="hint">챗GPT 무료 계정 · 임시 채팅 · 2026년 11월 25일 강사 실행 · 학교와 연락처는 가상</p>
+  </div></details>
+
+  <button class="done" data-step="s6" aria-pressed="false">해 봤어요</button>
+</section>
+<section class="step" id="s7">
+  <div class="step-head"><div class="num">7</div><div><h3>취미 배우기: 4주 계획</h3><p class="where">어디서: <a href="https://gemini.google.com" target="_blank" rel="noopener">제미나이</a> 또는 <a href="https://chatgpt.com" target="_blank" rel="noopener">챗GPT</a> · 무료</p></div></div>
+
+  <div class="block"><h4>따라 할 문장</h4>
+    <div class="chips" data-target="p-g1" data-mode="all"><button class="chip" data-fill="50대인데 수채화를 처음 배워 보고 싶어. 일주일에 두 번, 30분씩 4주 동안 혼자 따라 할 계획을 표로 만들어 줘. 준비물은 3만 원 안에서 골라 주고, 가격처럼 바뀌는 정보는 &#x27;확인 필요&#x27;라고 표시해 줘.">수채화</button><button class="chip" data-fill="기타를 처음 배워 보고 싶어. 일주일에 세 번, 15분씩 4주 동안 혼자 따라 할 계획을 표로 만들어 줘. 준비물은 꼭 필요한 것만 알려 주고, 가격처럼 바뀌는 정보는 &#x27;확인 필요&#x27;라고 표시해 줘.">기타</button><button class="chip" data-fill="스마트폰으로 사진 잘 찍는 법을 배우고 싶어. 일주일에 두 번, 20분씩 4주 동안 따라 할 계획을 표로 만들어 줘. 회차마다 찍어 볼 숙제도 하나씩 넣어 줘.">폰 사진</button></div>
+    <div class="prompt"><textarea id="p-g1" rows="6" aria-label="취미 배우기 계획 요청">50대인데 수채화를 처음 배워 보고 싶어. 일주일에 두 번, 30분씩 4주 동안 혼자 따라 할 계획을 표로 만들어 줘. 준비물은 3만 원 안에서 골라 주고, 가격처럼 바뀌는 정보는 '확인 필요'라고 표시해 줘.</textarea><button class="copy" data-copy="p-g1">복사</button></div>
+  </div>
+  <div class="block"><h4>이렇게 하면 됩니다</h4>
+    <ul class="tips"><li><b>얼마나 자주, 한 번에 몇 분, 몇 주 동안</b>을 말해 주면 따라 할 수 있는 계획이 나옵니다.</li><li>가격은 '확인 필요'로 받아 두고 살 때 직접 확인합니다.</li></ul><div style="margin-top:12px"><div class="line-copy"><span>1회차를 더 자세히, 순서대로 알려 줘</span><button data-copytext="1회차를 더 자세히, 순서대로 알려 줘">복사</button></div><div class="line-copy"><span>이번 주에 한 것을 말할게. 다음 주 계획을 고쳐 줘</span><button data-copytext="이번 주에 한 것을 말할게. 다음 주 계획을 고쳐 줘">복사</button></div></div>
+  </div>
+  <details class="real"><summary>강사가 실제로 한 화면 보기</summary><div class="real-body">
+    <p class="hint" style="margin-bottom:12px">그림을 누르면 크게 볼 수 있어요.</p>
+    <figure><img src="img/hobby_1_items.jpg" alt="제미나이가 정리한 3만 원 예산 수채화 입문 준비물 표" loading="lazy" width="1100" height="360"><figcaption><b>준비물 표.</b> 가격마다 '확인 필요'가 붙었습니다.</figcaption></figure>
+    <figure><img src="img/hobby_2_plan.jpg" alt="제미나이가 만든 4주 수채화 독학 플랜 표" loading="lazy" width="1100" height="361"><figcaption><b>4주 계획.</b> 주 2회, 30분씩 여덟 번으로 나눠 줬습니다.</figcaption></figure>
+    <p class="hint">제미나이 · 2026년 11월 25일 강사 실행</p>
+  </div></details>
+
+  <button class="done" data-step="s7" aria-pressed="false">해 봤어요</button>
+</section>
+<section class="step" id="s8">
+  <div class="step-head"><div class="num">8</div><div><h3>말로 걸어 보기</h3><p class="where">어디서: <a href="https://chatgpt.com" target="_blank" rel="noopener">챗GPT</a> 앱 · 무료</p></div></div>
+
+  <div class="block"><h4>글 쓰는 칸 오른쪽, 버튼 두 개</h4>
+    <ul class="tips">
+      <li><b>마이크 모양:</b> 누르고 말하면 글자로 받아 적어 줍니다. 내가 한 말을 보고 고칠 수 있습니다.</li>
+      <li><b>소리 파동 모양:</b> 전화 통화처럼 말로 주고받습니다. 중간에 "아니, 그거 말고" 하고 끼어들어도 됩니다.</li>
+    </ul></div>
+  <div class="block"><h4>마이크를 누르고 그대로 읽어 보세요</h4>
+    <div class="chips" data-target="p-v1" data-mode="all"><button class="chip" data-fill="안녕? 나는 경남에 사는 ○○○이야. 너는 나한테 어떤 도움을 줄 수 있는지, 아주 쉽게 세 가지만 알려 줘.">첫 인사</button><button class="chip" data-fill="오늘 저녁 반찬이 고민이야. 냉장고에 두부, 애호박, 계란이 있어. 30분 안에 만들 수 있는 반찬 두 가지만 알려 줘.">오늘 반찬</button><button class="chip" data-fill="우리 모임 회의에서 나온 얘기를 두서없이 말할게. 다 들은 뒤에 정한 것, 할 일, 누가 할지로 나눠서 정리해 줘.">두서없이 말하기</button></div>
+    <div class="prompt"><textarea id="p-v1" rows="4" aria-label="말로 걸 문장">안녕? 나는 경남에 사는 ○○○이야. 너는 나한테 어떤 도움을 줄 수 있는지, 아주 쉽게 세 가지만 알려 줘.</textarea><button class="copy" data-copy="p-v1">복사</button></div>
+  </div>
+  <div class="block"><h4>답이 마음에 안 들면, 이어서 한마디</h4>
+    <div class="line-copy"><span>더 짧게 세 줄로</span><button data-copytext="더 짧게 세 줄로">복사</button></div><div class="line-copy"><span>더 쉽게 말해 줘</span><button data-copytext="더 쉽게 말해 줘">복사</button></div><div class="line-copy"><span>다른 걸로 하나 더</span><button data-copytext="다른 걸로 하나 더">복사</button></div>
+    <ul class="tips" style="margin-top:12px">
+      <li>식당에서 "덜 맵게 해 주세요" 하듯이 계속 주문하면 됩니다.</li>
+      <li>말로 나눈 대화는 끝나면 채팅에 글로 남습니다. 무료 계정은 음성 대화에 하루 한도가 있습니다.</li>
+    </ul></div>
+
+  <button class="done" data-step="s8" aria-pressed="false">해 봤어요</button>
+</section>
+<section class="step" id="s9">
+  <div class="step-head"><div class="num">9</div><div><h3>찍어서 물어보기</h3><p class="where">어디서: <a href="https://chatgpt.com" target="_blank" rel="noopener">챗GPT</a> 앱 → 입력창 왼쪽 ＋ → 카메라 또는 사진 · 무료</p></div></div>
+
+  <div class="block"><h4>사진을 올리고 이렇게 물어보세요</h4>
+    <div class="chips" data-target="p-ph" data-mode="all"><button class="chip" data-fill="이 사진에 적힌 내용을 쉽게 설명해 줘. 내가 꼭 챙길 것만 세 줄로.">약 봉투 · 안내문</button><button class="chip" data-fill="이 고지서에서 언제까지 얼마를 내야 하는지 알려 줘. 날짜와 금액은 표로 정리해 줘.">고지서</button><button class="chip" data-fill="이 버튼들이 각각 무슨 기능인지 쉬운 말로 알려 줘. 자주 쓰는 것 세 개만 먼저.">가전제품 버튼</button><button class="chip" data-fill="이 메뉴판을 우리말로 옮겨 줘. 맵지 않은 것 두 가지만 골라 줘.">메뉴판 · 외국어</button></div>
+    <div class="prompt"><textarea id="p-ph" rows="4" aria-label="사진과 함께 보낼 문장">이 사진에 적힌 내용을 쉽게 설명해 줘. 내가 꼭 챙길 것만 세 줄로.</textarea><button class="copy" data-copy="p-ph">복사</button></div>
+  </div>
+  <div class="block"><h4>답을 받으면, 이어서 한마디</h4>
+    <div class="line-copy"><span>모르는 낱말은 풀어서 말해 줘</span><button data-copytext="모르는 낱말은 풀어서 말해 줘">복사</button></div><div class="line-copy"><span>날짜와 금액은 표로 정리해 줘</span><button data-copytext="날짜와 금액은 표로 정리해 줘">복사</button></div><div class="line-copy"><span>내가 지금 해야 할 일만 순서대로</span><button data-copytext="내가 지금 해야 할 일만 순서대로">복사</button></div>
+    <ul class="tips" style="margin-top:12px">
+      <li>약 · 돈 · 계약처럼 중요한 내용은 <b>원문과 한 번 더</b> 맞춰 보세요. 약은 약사님께 다시 확인합니다.</li>
+      <li>주민등록번호와 계좌번호는 <b>가리고</b> 찍습니다. 다른 사람 얼굴이 나온 사진은 올리지 않습니다.</li>
+      <li>무료 계정은 사진 올리기에 하루 횟수 제한이 있습니다. 다 쓰면 내일 다시 됩니다.</li>
+    </ul></div>
+
+  <button class="done" data-step="s9" aria-pressed="false">해 봤어요</button>
+</section>
+<section class="step" id="s10">
+  <div class="step-head"><div class="num">10</div><div><h3>답 대신 퀴즈 받기</h3><p class="where">어디서: <a href="https://chatgpt.com" target="_blank" rel="noopener">챗GPT</a> · 무료 · AI를 과외 선생님으로 씁니다</p></div></div>
+
+  <div class="block"><h4>따라 할 문장</h4>
+    <div class="chips" data-target="p-qz" data-mode="all"><button class="chip" data-fill="나는 [나이대]이고 '문자 사기 예방법'을 공부하고 있어. 설명부터 하지 말고, 내가 제대로 아는지 확인하는 퀴즈를 하나씩만 내 줘. 내가 답하면 맞았는지 알려 주고, 왜 그런지 쉽게 설명해 줘.">문자 사기 예방법</button><button class="chip" data-fill="나는 [나이대]이고 '키오스크 주문하는 법'을 공부하고 있어. 설명부터 하지 말고, 내가 제대로 아는지 확인하는 퀴즈를 하나씩만 내 줘. 내가 답하면 맞았는지 알려 주고, 왜 그런지 쉽게 설명해 줘.">키오스크 주문</button><button class="chip" data-fill="나는 [나이대]이고 '스마트폰 사진 정리하는 법'을 공부하고 있어. 설명부터 하지 말고, 내가 제대로 아는지 확인하는 퀴즈를 하나씩만 내 줘. 내가 답하면 맞았는지 알려 주고, 왜 그런지 쉽게 설명해 줘.">스마트폰 사진 정리</button><button class="chip" data-fill="나는 [나이대]이고 '[배우고 싶은 것]'을 공부하고 있어. 설명부터 하지 말고, 내가 제대로 아는지 확인하는 퀴즈를 하나씩만 내 줘. 내가 답하면 맞았는지 알려 주고, 왜 그런지 쉽게 설명해 줘.">직접 쓰기</button></div>
+    <div class="prompt"><textarea id="p-qz" rows="6" aria-label="퀴즈 부탁 문장">나는 [나이대]이고 '문자 사기 예방법'을 공부하고 있어. 설명부터 하지 말고, 내가 제대로 아는지 확인하는 퀴즈를 하나씩만 내 줘. 내가 답하면 맞았는지 알려 주고, 왜 그런지 쉽게 설명해 줘.</textarea><button class="copy" data-copy="p-qz">복사</button></div>
+    <p class="hint">[나이대] 자리는 '60대'처럼 고쳐 쓰세요.</p>
+  </div>
+  <div class="block"><h4>이렇게 하면 됩니다</h4>
+    <ul class="tips">
+      <li><b>틀려도 됩니다.</b> 틀린 이유를 듣고 내 말로 다시 설명해 보면 내 것이 됩니다.</li>
+      <li>퀴즈가 누르는 카드로 나오면 보기를 누르고, 글로 나오면 번호나 글자로 답하세요.</li>
+      <li>AI가 낸 정답도 틀릴 수 있습니다. 돈과 건강이 걸린 내용은 공식 안내와 한 번 더 맞춰 보세요.</li>
+    </ul>
+    <div class="line-copy" style="margin-top:12px"><span>한 문제 더, 조금 어렵게</span><button data-copytext="한 문제 더, 조금 어렵게">복사</button></div><div class="line-copy"><span>방금 내용을 내가 설명해 볼게. 틀린 데를 짚어 줘</span><button data-copytext="방금 내용을 내가 설명해 볼게. 틀린 데를 짚어 줘">복사</button></div>
+  </div>
+  <details class="real"><summary>강사가 실제로 한 화면 보기</summary><div class="real-body">
+    <p class="hint" style="margin-bottom:12px">그림을 누르면 크게 볼 수 있어요.</p>
+    <figure><img src="img/quiz_1_card.png" alt="챗GPT가 낸 문자 사기 퀴즈: 택배 주소 수정 문자를 받았을 때 가장 안전한 행동 고르기" loading="lazy" width="1000" height="707"><figcaption><b>① AI가 낸 퀴즈.</b> 택배 주소를 고치라는 문자를 받았을 때 어떻게 할지 네 가지 중에 고릅니다.</figcaption></figure>
+    <figure><img src="img/quiz_2_feedback.png" alt="보기 C를 골랐을 때: 정답 B는 초록, 고른 답 C는 빨강, 각각 이유 한 줄" loading="lazy" width="1000" height="476"><figcaption><b>② 일부러 틀려 봤습니다.</b> 정답은 초록, 내가 고른 답은 빨강으로 표시하고 이유를 한 줄씩 알려 줍니다.</figcaption></figure>
+    <p class="hint">챗GPT · 2026년 11월 17일 강사 실행</p>
+  </div></details>
+
+  <button class="done" data-step="s10" aria-pressed="false">해 봤어요</button>
+</section>
+<section class="step" id="s11">
+  <div class="step-head"><div class="num">11</div><div><h3>그림 한 장 그려 보기</h3><p class="where">어디서: <a href="https://chatgpt.com" target="_blank" rel="noopener">챗GPT</a> · 무료 계정은 하루에 몇 장만 됩니다</p></div></div>
+
+  <div class="block"><h4>따라 할 문장</h4>
+    <div class="chips" data-target="p-dr" data-mode="all"><button class="chip" data-fill="옛 수묵 산수화 느낌으로, 2026년 가을 창원 주남저수지 풍경을 그려 줘. 갈대밭과 날아오르는 철새 떼가 보이게, 먹색과 옅은 색으로, 가로로 길게.">수묵화 주남저수지</button><button class="chip" data-fill="여덟 살 조카 생일 카드에 넣을 그림을 그려 줘. 귀여운 공룡이 생일 케이크를 들고 웃고 있는 모습, 밝은 색으로, 글자는 넣지 말고.">생일 카드</button><button class="chip" data-fill="(내 얼굴 사진을 올리고) 이 사진 속 사람을 따뜻한 동화책 그림처럼 바꿔 줘. 얼굴 느낌은 그대로, 배경은 가을 공원으로.">내 사진을 동화책 그림으로</button><button class="chip" data-fill="(종이에 대충 그린 배치 그림을 찍어 올리고) 이 그림 배치대로 '[행사 이름]' 세로 포스터를 만들어 줘. 따뜻한 가을 분위기로. 그림 속 괄호 안 글자는 설명이니 넣지 마.">손그림을 포스터로</button></div>
+    <div class="prompt"><textarea id="p-dr" rows="5" aria-label="그림 부탁 문장">옛 수묵 산수화 느낌으로, 2026년 가을 창원 주남저수지 풍경을 그려 줘. 갈대밭과 날아오르는 철새 떼가 보이게, 먹색과 옅은 색으로, 가로로 길게.</textarea><button class="copy" data-copy="p-dr">복사</button></div>
+  </div>
+  <div class="block"><h4>나온 그림은 말로 고칩니다</h4>
+    <div class="line-copy"><span>색을 조금 더 밝게</span><button data-copytext="색을 조금 더 밝게">복사</button></div><div class="line-copy"><span>해 질 녘 노을로</span><button data-copytext="해 질 녘 노을로">복사</button></div><div class="line-copy"><span>글자는 빼고</span><button data-copytext="글자는 빼고">복사</button></div>
+    <ul class="tips" style="margin-top:12px">
+      <li>무료는 하루 장수가 정해져 있으니 <b>한 장을 정성껏</b> 부탁하세요. 다 쓰면 내일 다시 됩니다.</li>
+      <li>사진은 입력칸 왼쪽 ＋ 버튼으로 올립니다. <b>다른 사람 얼굴 사진은 올리지 않습니다.</b></li>
+      <li>포스터 속 날짜·전화번호·QR은 가짜일 수 있습니다. 쓰기 전에 직접 확인하세요.</li>
+    </ul></div>
+  <details class="real"><summary>강사가 실제로 한 화면 보기</summary><div class="real-body">
+    <figure><img src="img/draw_junam.jpg" alt="챗GPT가 그린 수묵화풍 가을 주남저수지: 갈대밭과 날아오르는 철새 떼" loading="lazy" width="1000" height="501"><figcaption><b>같은 문장으로 그린 결과.</b> 갈대밭과 철새 떼, 왼쪽 위에 '창원 주남저수지' 글씨까지 넣어 줬습니다. AI가 그린 풍경은 실제 모습과 다를 수 있습니다.</figcaption></figure>
+    <p class="hint">챗GPT · 2026년 11월 17일 강사 실행 · 임시 채팅에서는 그림이 그려지지 않으니 일반 채팅에서 하세요</p>
+  </div></details>
+
+  <button class="done" data-step="s11" aria-pressed="false">해 봤어요</button>
+</section>
+<section class="step" id="s12">
+  <div class="step-head"><div class="num">12</div><div><h3>노래 한 곡 만들기</h3><p class="where">어디서: <a href="https://suno.com" target="_blank" rel="noopener">수노(Suno)</a> · 계정이 필요합니다</p></div></div>
+
+  <div class="block"><h4>가사는 직접 씁니다</h4>
+    <div class="prompt"><textarea id="p-s1" rows="12" aria-label="노래 가사">[Verse 1]
+아침 여덟 시 행정실 불이 켜지고
+급식실엔 벌써 김이 오르네
+돌봄교실 문 여는 그 손길
+학교의 하루를 여는 사람들
+
+[Chorus]
+AI는 동료, 초안은 맡기고
+마지막 확인은 내가 한다
+오늘도 한 가지만 줄여 보자
+경남의 학교는 우리가 돌린다
+
+[Verse 2]
+공문은 쉬운 말로 다시 쓰고
+점검표는 한 장으로 줄이고
+남은 시간엔 아이들 얼굴 한 번 더
+그게 우리가 바라던 내일
+
+[Chorus]
+AI는 동료, 초안은 맡기고
+마지막 확인은 내가 한다
+오늘도 한 가지만 줄여 보자
+경남의 학교는 우리가 돌린다</textarea><button class="copy" data-copy="p-s1">복사</button></div>
+    <p class="hint">강의에서 들으신 「학교를 돌리는 사람들」의 가사입니다. 우리 학교 이야기로 고쳐 써 보세요.</p>
+  </div>
+  <div class="block"><h4>스타일은 한 줄로</h4>
+    <div class="line-copy"><span>밝은 포크 팝, 통기타, 따뜻한 합창, 한국어 여성 보컬, 응원가</span><button data-copytext="밝은 포크 팝, 통기타, 따뜻한 합창, 한국어 여성 보컬, 응원가">복사</button></div><div class="line-copy"><span>잔잔한 발라드, 피아노, 한국어 남성 보컬</span><button data-copytext="잔잔한 발라드, 피아노, 한국어 남성 보컬">복사</button></div><div class="line-copy"><span>신나는 트로트, 경쾌한 박자, 한국어 보컬</span><button data-copytext="신나는 트로트, 경쾌한 박자, 한국어 보컬">복사</button></div><ul class="tips" style="margin-top:12px"><li>가사가 막막하면 챗GPT에 먼저 부탁하세요. "우리 학교 송년회에서 부를 노래 가사를 써 줘. 행정실, 급식실, 돌봄교실 이야기를 넣어서."</li><li>가사에 <b>실제 이름이나 개인정보는 넣지 않습니다.</b></li><li>AI로 만든 노래를 행사 밖으로 내보낼 때는 'AI로 만들었다'고 밝혀 둡니다. 요금제마다 쓸 수 있는 범위가 다릅니다.</li></ul>
+  </div>
+  <details class="real"><summary>강사가 실제로 한 화면 보기</summary><div class="real-body">
+    <p class="hint" style="margin-bottom:12px">그림을 누르면 크게 볼 수 있어요.</p>
+    <figure><img src="img/song_suno.jpg" alt="수노에서 만든 노래 화면: 학교를 돌리는 사람들" loading="lazy" width="1100" height="623"><figcaption><b>가사는 사람이, 곡은 AI가.</b> 가사와 스타일 한 줄로 1분 30초 남짓한 노래가 나왔습니다.</figcaption></figure>
+    <p class="hint">수노 v6 · 2026년 11월 25일 강사 실행</p>
+  </div></details>
+
+  <button class="done" data-step="s12" aria-pressed="false">해 봤어요</button>
+</section>
+<h2 style="margin:34px 4px 4px;font-size:1.3rem;font-weight:800;letter-spacing:-.01em">안전하게</h2>
+<p style="margin:0 4px 14px;color:var(--ink-3);font-size:.95rem">쓰기 전에 한 번, 내보내기 전에 한 번 멈춥니다.</p>
+<section class="step" id="s13">
+  <div class="step-head"><div class="num">13</div><div><h3>내 챗GPT 설정 세 가지</h3><p class="where">어디서: <a href="https://chatgpt.com" target="_blank" rel="noopener">챗GPT</a> 앱 → 왼쪽 위 메뉴 → 맨 아래 내 이름 · 한 번만 해 두면 됩니다</p></div></div>
+
+  <div class="block"><h4>① 학습에 쓰지 않게</h4>
+    <p class="path">설정 → 기록 및 데이터 → <b>'모두를 위한 모델 개선' 끄기</b></p>
+    <p class="hint">앱 버전에 따라 메뉴 이름이 '데이터 제어'일 수 있습니다.</p>
+    <figure><img src="img/set_1_training.png" alt="챗GPT 앱 설정에서 모두를 위한 모델 개선을 끄는 순서" loading="lazy" width="1100" height="575"><figcaption>메뉴 → 내 이름 → 기록 및 데이터 → 맨 위 스위치 끄기</figcaption></figure></div>
+  <div class="block"><h4>② 메모리 확인</h4>
+    <p class="path">설정 → 메모리 → <b>'메모리 요약' 열어 보기</b></p>
+    <p class="hint">AI가 나에 대해 기억하는 내용이 적혀 있습니다. 남기기 싫은 내용은 지우고, 필요하면 메모리를 끕니다.</p>
+    <figure><img src="img/set_2_memory.png" alt="챗GPT 앱 설정에서 메모리 요약을 여는 순서" loading="lazy" width="1100" height="576"><figcaption>메뉴 → 내 이름 → 메모리 → 메모리 요약</figcaption></figure></div>
+  <div class="block"><h4>③ 임시 채팅</h4>
+    <p class="path">대화창 오른쪽 위 아이콘 → <b>임시 채팅</b></p>
+    <p class="hint">대화 목록과 메모리에 남지 않습니다. 다만 안전 확인용으로 최대 30일 보관될 수 있으니, 임시 채팅에도 주민번호·계좌 같은 개인정보는 넣지 않습니다.</p>
+    <figure><img src="img/set_3_temp.png" alt="챗GPT 앱에서 임시 채팅을 켜는 순서" loading="lazy" width="1100" height="565"><figcaption>오른쪽 위 아이콘 → 임시 채팅</figcaption></figure></div>
+  <div class="block"><h4>하나 더: 사용자 지침 써 두기</h4>
+    <p class="hint" style="margin-bottom:8px">프로필 → 개인 설정 → 개인 맞춤 설정. 한 번 써 두면 모든 대화에 적용됩니다.</p>
+    <div class="chips" data-target="p-inst" data-mode="all"><button class="chip" data-fill="나는 경남에 사는 60대야. 답은 핵심 세 줄로 먼저 말하고, 자세한 건 그 다음에 써 줘. 어려운 말과 영어는 괄호로 풀어 줘. 날짜·금액·전화번호는 어디서 나온 정보인지 함께 알려 줘.">60대 시민</button><button class="chip" data-fill="나는 대학교 2학년이야. 답은 핵심 세 줄로 먼저 말하고, 예시는 내 전공으로 들어 줘. 모르는 내용은 모른다고 말하고, 숫자와 날짜는 어디서 나온 정보인지 함께 알려 줘.">대학생</button><button class="chip" data-fill="나는 사무직 직장인이야. 답은 결론부터 세 줄로, 필요하면 표로 정리해 줘. 모르는 숫자는 '확인 필요'라고 적어 줘.">직장인</button><button class="chip" data-fill="나는 작은 가게를 하는 사장이야. 답은 쉬운 말로 세 줄 먼저, 바로 쓸 수 있는 문장으로 써 줘. 가격·날짜는 내가 준 것만 쓰고, 없으면 물어봐 줘.">사장님</button></div>
+    <div class="prompt"><textarea id="p-inst" rows="5" aria-label="사용자 지침 문장">나는 경남에 사는 60대야. 답은 핵심 세 줄로 먼저 말하고, 자세한 건 그 다음에 써 줘. 어려운 말과 영어는 괄호로 풀어 줘. 날짜·금액·전화번호는 어디서 나온 정보인지 함께 알려 줘.</textarea><button class="copy" data-copy="p-inst">복사</button></div>
+  </div>
+  <div class="block"><h4>해 볼 만한 놀이</h4>
+    <div class="line-copy"><span>네가 나에 대해 알고 있는 걸 바탕으로 동물을 한 마리 그려 주고, 왜 그렇게 그렸는지 설명해 줘.</span><button data-copytext="네가 나에 대해 알고 있는 걸 바탕으로 동물을 한 마리 그려 주고, 왜 그렇게 그렸는지 설명해 줘.">복사</button></div>
+    <p class="hint" style="margin-top:8px">나를 잘 아는 AI는 편합니다. 그만큼 내 정보가 쌓여 있다는 뜻이니 가끔 열어 보세요. 화면은 강사 계정(유료)이라 무료 계정은 메뉴 모양이 조금 다를 수 있습니다.</p></div>
+
+  <button class="done" data-step="s13" aria-pressed="false">해 봤어요</button>
+</section>
+
+<section class="sec" aria-labelledby="t-role">
+  <h2 id="t-role">사람의 몫 네 가지</h2>
+  <p class="sub">AI가 초안을 쓸수록 사람에게 남는 일은 더 또렷해집니다</p>
+  <div class="safety">
+    <div class="row"><b>사실 확인</b><p>숫자 · 날짜 · 이름 · 출처를 원본과 맞춰 봅니다.</p></div>
+    <div class="row"><b>맥락 이해</b><p>우리 학교 사정과 읽는 사람은 우리가 압니다. 말해 주지 않으면 AI는 모릅니다.</p></div>
+    <div class="row"><b>공감</b><p>읽는 사람의 걱정을 떠올립니다. 빠진 당부를 되살리는 일입니다.</p></div>
+    <div class="row"><b>최종 판단</b><p>보낼지 말지는 사람이 정합니다. 책임도 사람에게 남습니다.</p></div>
+  </div>
+  <p class="note">AI는 동료입니다. 그런데 결재란에 이름을 쓰는 동료는 아닙니다.</p>
+</section>
+<section class="sec" aria-labelledby="t-no5">
+  <h2 id="t-no5">교육현장에서 AI에 넣지 않는 다섯 가지</h2>
+  <p class="sub">개인 계정의 AI에는 넣지 않습니다</p>
+  <div class="safety">
+    <div class="row"><b>이름과 연락처</b><p>학생 · 보호자 · 동료의 이름, 전화번호, 주소.</p></div>
+    <div class="row"><b>번호</b><p>주민등록번호, 계좌번호, 비밀번호, 인증번호.</p></div>
+    <div class="row"><b>아이의 기록</b><p>성적, 상담 기록, 건강과 알레르기 정보.</p></div>
+    <div class="row"><b>얼굴과 목소리</b><p>다른 사람이 나온 사진, 영상, 음성.</p></div>
+    <div class="row"><b>비공개 업무 자료</b><p>공개되지 않은 문서와 내부 자료.</p></div>
+  </div>
+  <p class="note">헷갈리면 넣지 않습니다. 꼭 필요하면 가명과 가상 정보로 바꾸고, 기관이 정한 도구와 지침을 따릅니다.</p>
+</section>
+<section class="sec" aria-labelledby="t-habit">
+  <h2 id="t-habit">기본 습관 세 가지</h2>
+  <p class="sub">틀린 답 · 치우친 답 · 남의 것을 조심합니다</p>
+  <div class="safety">
+    <div class="row"><b>틀린 답변</b><p>그럴듯해도 원본과 맞춰 봅니다. "원문과 대조해서 다른 곳을 표로 보여 줘."</p></div>
+    <div class="row"><b>편향</b><p>한쪽 말만 하지 않았는지 봅니다. "반대쪽 입장도 말해 봐."</p></div>
+    <div class="row"><b>저작권</b><p>남의 글 · 그림 · 음악을 통째로 넣어 베끼지 않습니다. AI로 만든 것은 AI로 만들었다고 적어 둡니다.</p></div>
+  </div>
+  <p class="note">세 가지 모두 답은 같습니다. 밖으로 나가기 전에 사람이 한 번 봅니다.</p>
+</section>
+
+<section class="sec" aria-labelledby="t-follow">
+  <h2 id="t-follow">강의가 끝나도 이어집니다</h2>
+  <p class="sub">매주 새 AI 소식을 받아 보는 두 가지 방법 · 둘 다 무료입니다</p>
+  <div class="follow">
+    <div class="fc">
+      <div class="k">유튜브</div>
+      <h3>김덕진의 뉴스덕</h3>
+      <p>한 주의 AI · IT 뉴스를 쉽게 풀어 드립니다. 매주 월요일 밤 8시 라이브. 구독해 두면 알림이 옵니다.</p>
+      <a class="go yt" href="https://www.youtube.com/@newsduk?sub_confirmation=1" target="_blank" rel="noopener">뉴스덕 구독하기 ↗</a>
+    </div>
+    <div class="fc">
+      <div class="k">카카오톡 오픈채팅</div>
+      <h3>김덕진의 AI 큐레이션</h3>
+      <p>챙겨 볼 만한 AI 소식을 골라 올려 드리는 방입니다. 궁금한 것을 물어보셔도 됩니다.</p>
+      <a class="go ka" href="https://open.kakao.com/o/gQiVg8Bh" target="_blank" rel="noopener">오픈채팅방 들어가기 ↗</a>
+    </div>
+  </div>
+</section>
+
+<section class="bookad" aria-label="책 안내">
+  <img src="img/book_ai2027.jpg" alt="『AI 2027 트렌드&amp;활용백과』 책 표지" width="360" height="438" loading="lazy">
+  <div>
+    <div class="k">오늘 이야기는 이 책에 들어 있습니다</div>
+    <h3>『AI 2027 트렌드&amp;활용백과』</h3>
+    <p>김덕진 지음 · 스마트북스 · 11월 2일 출간. 앞쪽은 2027년 AI 트렌드 10가지, 뒤쪽은 AI 도구 50개를 직접 써 본 활용편입니다.</p>
+    <div class="bt">
+      <a class="buy" href="https://product.kyobobook.co.kr/detail/S000221773230" target="_blank" rel="noopener">교보문고에서 책 보기 ↗</a>
+      <a class="home" href="https://www.itcl.kr" target="_blank" rel="noopener">ITCL 홈페이지 ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>화면은 강사가 2026년 11월에 직접 실행하고 찍은 실제 화면입니다(설정 화면은 유료 계정). 학교와 연락처는 모두 가상입니다.</p>
+  <p>서비스 화면과 무료 범위는 바뀔 수 있습니다. 업무에 쓸 때는 기관의 지침이 먼저입니다.</p>
+  <p>김덕진 · IT커뮤니케이션연구소 <a href="https://www.itcl.kr" target="_blank" rel="noopener">www.itcl.kr</a> · <a href="https://open.kakao.com/o/gQiVg8Bh" target="_blank" rel="noopener">김덕진의 AI 큐레이션 오픈카톡방</a></p>
+</footer>
+
+</div>
+
+<div class="font-ctrl" aria-label="글자 크기">
+  <button type="button" data-font="-1" aria-label="글자 작게">A−</button>
+  <button type="button" data-font="1" aria-label="글자 크게">A+</button>
+</div>
+<div class="toast" id="toast" role="status">복사했어요. AI에 붙여 넣으세요</div>
+
+<script>
+(function(){
+  var mem = {};   // 저장이 막힌 브라우저에서도 이 화면 안에서는 동작
+  var store = {
+    get:function(k){ try{ var v = localStorage.getItem('gne1126_'+k); if(v !== null) return v; }catch(e){} return (k in mem) ? mem[k] : null; },
+    set:function(k,v){ mem[k] = v; try{ localStorage.setItem('gne1126_'+k, v); }catch(e){} }
+  };
+  var toastEl = document.getElementById('toast'), tt;
+  function toast(msg){ toastEl.textContent = msg; toastEl.classList.add('show'); clearTimeout(tt); tt = setTimeout(function(){ toastEl.classList.remove('show'); }, 1600); }
+
+  function copyText(t){
+    function fallback(){
+      var ta = document.createElement('textarea'); ta.value = t; ta.setAttribute('readonly','');
+      ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select();
+      try{ document.execCommand('copy'); toast('복사했어요. AI에 붙여 넣으세요'); }catch(e){ toast('길게 눌러 직접 복사해 주세요'); }
+      document.body.removeChild(ta);
+    }
+    if(navigator.clipboard && window.isSecureContext){
+      navigator.clipboard.writeText(t).then(function(){ toast('복사했어요. AI에 붙여 넣으세요'); }, fallback);
+    } else { fallback(); }
+  }
+
+  function grow(ta){ ta.style.height='auto'; ta.style.height = (ta.scrollHeight + 2) + 'px'; }
+  document.querySelectorAll('.prompt textarea').forEach(function(ta){ grow(ta); ta.addEventListener('input', function(){ grow(ta); }); });
+
+  // 칩: 빈칸 채우기
+  document.querySelectorAll('.chips[data-target]').forEach(function(group){
+    var ta = document.getElementById(group.dataset.target);
+    var mode = group.dataset.mode || 'hero';
+    group.querySelectorAll('.chip').forEach(function(chip){
+      chip.addEventListener('click', function(){
+        group.querySelectorAll('.chip').forEach(function(c){ c.setAttribute('aria-pressed','false'); });
+        chip.setAttribute('aria-pressed','true');
+        var f = chip.dataset.fill;
+        if(mode === 'all'){ ta.value = f; }
+        else if(mode === 'slot'){ ta.value = ta.dataset.template.split(group.dataset.slot).join(f); }
+        else { ta.value = f + '\n' + ta.dataset.tail; }   // hero · line1: 첫 줄 바꾸기
+        grow(ta);
+      });
+    });
+  });
+
+  document.querySelectorAll('[data-copy]').forEach(function(b){
+    b.addEventListener('click', function(){ copyText(document.getElementById(b.dataset.copy).value); });
+  });
+  document.querySelectorAll('[data-copytext]').forEach(function(b){
+    b.addEventListener('click', function(){ copyText(b.dataset.copytext); });
+  });
+
+  // 접힌 칸을 열면 입력 상자 높이 다시 맞추기
+  document.querySelectorAll('details').forEach(function(d){
+    d.addEventListener('toggle', function(){ d.querySelectorAll('.prompt textarea').forEach(grow); });
+  });
+  // 화면 그림은 누르면 크게
+  document.querySelectorAll('figure img').forEach(function(img){
+    img.style.cursor = 'zoom-in';
+    img.addEventListener('click', function(){ window.open(img.getAttribute('src'), '_blank'); });
+  });
+
+  // 진행 체크 (이 브라우저에만 저장)
+  function refresh(){
+    var n = 0;
+    ['s1','s2','s3','s4','s5','s6','s7','s8','s9','s10','s11','s12','s13'].forEach(function(k){
+      var on = store.get(k) === '1';
+      if(on) n++;
+      var b = document.querySelector('.done[data-step="'+k+'"]');
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+      b.textContent = on ? '해 봤어요 ✓' : '해 봤어요';
+      document.querySelector('[data-dot="'+k+'"]').classList.toggle('on', on);
+    });
+    document.getElementById('cnt').textContent = n;
+  }
+  document.querySelectorAll('.done').forEach(function(b){
+    b.addEventListener('click', function(){
+      var k = b.dataset.step; var on = store.get(k) === '1';
+      store.set(k, on ? '0' : '1');
+      refresh();
+      if(!on) toast('잘하셨어요!');
+    });
+  });
+  refresh();
+
+  // 글자 크기
+  var scale = parseFloat(store.get('scale') || '1') || 1;
+  function applyScale(){ document.documentElement.style.setProperty('--scale', scale); document.querySelectorAll('.prompt textarea').forEach(grow); }
+  applyScale();
+  document.querySelectorAll('[data-font]').forEach(function(b){
+    b.addEventListener('click', function(){
+      scale = Math.min(1.5, Math.max(0.9, Math.round((scale + 0.1 * parseInt(b.dataset.font,10)) * 10) / 10));
+      store.set('scale', String(scale)); applyScale();
+    });
+  });
+})();
+</script>
+</body>
+</html>
